@@ -31,3 +31,8 @@ upstream webservers{
             proxy_pass http://webservers/admin
         }
 ```
+## Day 2
+### 项目约定
++ 管理端发出的请求，统一使用`/admin`作为前缀
++ 用户端发出的请求，统一使用`/user`作为前缀
+### 
