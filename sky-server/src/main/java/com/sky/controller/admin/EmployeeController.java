@@ -62,6 +62,7 @@ public class EmployeeController {
                 .name(employee.getName())
                 .token(token)
                 .build();
+        // System.out.println("controller线程id：" + Thread.currentThread().getId());
 
         return Result.success(employeeLoginVO);
     }
