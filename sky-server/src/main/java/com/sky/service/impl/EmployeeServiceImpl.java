@@ -9,10 +9,12 @@ import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+@Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -31,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //1、根据用户名查询数据库中的数据
         Employee employee = employeeMapper.getByUsername(username);
+        log.info("password={}", password);
 
         //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
         if (employee == null) {
