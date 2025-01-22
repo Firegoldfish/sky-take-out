@@ -47,6 +47,12 @@ public class CategoryController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 删除分类
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping
     @ApiOperation(value = "删除分类")
     public Result<String> deleteById(Long id){
@@ -55,4 +61,10 @@ public class CategoryController {
         return Result.success();
     }
 
+    @PutMapping
+    @ApiOperation(value = "更新分类")
+    public Result<String> update(@RequestBody CategoryDTO categoryDTO){
+        categoryService.update(categoryDTO);
+        return Result.success();
+    }
 }
