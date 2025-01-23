@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Service
@@ -81,5 +82,9 @@ public class CategoryServiceImpl implements CategoryService {
                 .updateUser(BaseContext.getCurrentId())
                 .build();
         categoryMapper.update(category);
+    }
+
+    public List<Category> list(Integer type) {
+        return categoryMapper.list(type);
     }
 }
