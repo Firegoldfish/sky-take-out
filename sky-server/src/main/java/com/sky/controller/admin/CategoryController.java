@@ -67,4 +67,11 @@ public class CategoryController {
         categoryService.update(categoryDTO);
         return Result.success();
     }
+
+    @ApiOperation(value = "修改启停状态")
+    @PostMapping("/status/{status}")
+    public Result<String> updateStatus(@PathVariable("status") Integer status, Long id){
+        categoryService.updateStatus(id, status);
+        return Result.success();
+    }
 }
