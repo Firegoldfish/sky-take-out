@@ -46,12 +46,12 @@ public class DishController {
         return Result.success();
     }
 
-//    @PostMapping("/status/{status}")
-//    @ApiOperation("修改菜品状态")
-//    public Result<String> updateStatus(@PathVariable("status") Integer status, Long id){
-//        dishService.updateStatus(id, status);
-//        return Result.success();
-//    }
+    @PostMapping("/status/{status}")
+    @ApiOperation("修改菜品状态")
+    public Result<String> updateStatus(@PathVariable("status") Integer status, Long id){
+        dishService.updateStatus(id, status);
+        return Result.success();
+    }
 
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜品")

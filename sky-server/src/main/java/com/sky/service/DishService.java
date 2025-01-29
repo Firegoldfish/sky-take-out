@@ -23,7 +23,7 @@ public interface DishService {
 
     void deleteBatch(List<Long> ids);
 
-    //void updateStatus(Long id, Integer status);
+    void updateStatus(Long id, Integer status);
 
     DishVO getByIdWithFlavor(Long id);
 

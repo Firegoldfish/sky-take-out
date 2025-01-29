@@ -76,13 +76,13 @@ public class DishServiceImpl implements DishService {
     }
 
 
-//    public void updateStatus(Long id, Integer status) {
-//        Dish dish = Dish.builder()
-//                .id(id)
-//                .status(status)
-//                .build();
-//        dishMapper.update(dish);
-//    }
+    public void updateStatus(Long id, Integer status) {
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+        dishMapper.update(dish);
+    }
 
     public DishVO getByIdWithFlavor(Long id) {
         //根据id查询菜品
