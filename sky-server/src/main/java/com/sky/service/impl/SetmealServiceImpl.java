@@ -3,12 +3,16 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.exception.DeletionNotAllowedException;
+import com.sky.exception.SetmealEnableFailedException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -26,10 +30,12 @@ public class SetmealServiceImpl implements SetmealService{
 
     private final SetmealMapper setmealMapper;
     private final SetmealDishMapper setmealDishMapper;
+    private final DishMapper dishMapper;
 
-    public SetmealServiceImpl(SetmealMapper setmealMapper, SetmealDishMapper setmealDishMapper) {
+    public SetmealServiceImpl(SetmealMapper setmealMapper, SetmealDishMapper setmealDishMapper, DishMapper dishMapper) {
         this.setmealMapper = setmealMapper;
         this.setmealDishMapper = setmealDishMapper;
+        this.dishMapper = dishMapper;
     }
 
     @Override
@@ -90,5 +96,24 @@ public class SetmealServiceImpl implements SetmealService{
             setmealMapper.deleteById(setmealId);
             setmealDishMapper.deleteBySetmealId(setmealId);
         });
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        if (StatusConstant.ENABLE == status){
+            List<Dish> dishList = dishMapper.getBySetmealId(id);
+            if (dishList != null && dishList.size() > 0){
+                dishList.forEach(dish -> {
+                    if (StatusConstant.DISABLE == dish.getStatus()){
+                        throw new SetmealEnableFailedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+                    }
+                });
+            }
+        }
+        Setmeal setmeal = Setmeal.builder()
+                .id(id)
+                .status(status)
+                .build();
+        setmealMapper.update(setmeal);
     }
 }
