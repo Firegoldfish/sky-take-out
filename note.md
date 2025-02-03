@@ -36,4 +36,16 @@ upstream webservers{
 + 管理端发出的请求，统一使用`/admin`作为前缀
 + 用户端发出的请求，统一使用`/user`作为前缀
 ### Redis
-redis不是替代MySQL而是补充，用于缓存数据，提高访问速度。
+redis不是替代MySQL而是补充，用于缓存数据，提高访问速度。key-value存储，支持多种数据结构。   
+五种数据类型：String、List、Set、Hash、ZSet：
++ String：字符串，最简单的类型
++ List：列表，按照插入顺序排序，可以重复，类似Java中的List
++ Set：集合，无序，不重复，类似Java中的Set，可进行交集、并集、差集等操作
++ Hash：哈希，散列，类似Java中的HashMap
++ ZSet：有序不重复集合，每个元素都会关联一个double类型的分数，根据分数排序（存排行榜）
+### Redis常用命令
++ 字符串命令
+  + set key value  设置key-value
+  + get key  获取key对应的value
+  + SETNX key value  若key不存在则设置key-value
+  + SETEX key seconds value  设置key-value并设置过期时间
