@@ -35,4 +35,5 @@ upstream webservers{
 ### 项目约定
 + 管理端发出的请求，统一使用`/admin`作为前缀
 + 用户端发出的请求，统一使用`/user`作为前缀
-### 
+### Redis
+redis不是替代MySQL而是补充，用于缓存数据，提高访问速度。
