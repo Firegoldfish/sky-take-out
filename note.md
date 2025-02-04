@@ -49,3 +49,32 @@ redis不是替代MySQL而是补充，用于缓存数据，提高访问速度。k
   + get key  获取key对应的value
   + SETNX key value  若key不存在则设置key-value
   + SETEX key seconds value  设置key-value并设置过期时间
++ 哈希命令  
+  + HSET key field value  设置key对应的field-value
+  + HGET key field  获取key对应的field的value
+  + HDEL key field  删除key对应的field
+  + HKEYS key  获取key对应的所有field
+  + HVALS key  获取key对应的所有value
++ 列表命令
+  + LPUSH key value  从左边插入
+  + LRANGE key start stop  获取key对应的列表中的元素
+  + RPOP key  从右边弹出
+  + LLEN key  获取列表长度
++ 集合命令
+  + SADD key member  添加元素
+  + SMEMBERS key  获取所有元素
+  + SCARD key  获取集合长度
+  + SINTER key1 key2  获取两个集合的交集
+  + SUNION key1 key2  获取两个集合的并集
+  + SDIFF key1 key2  获取两个集合的差集
+  + SREM key member  删除元素
++ 有序集合命令
+  + ZADD key score member  添加元素
+  + ZRANGE key start stop  获取元素
+  + ZINCRBY key increment member  增加元素的score
+  + ZREM key member  删除元素
++ 通用命令，不分数据类型
+  + KEYS pattern  查找符合条件的key
+  + DEL key  删除key
+  + EXISTS key  判断key是否存在
+  + TYPE key  获取key的数据类型
