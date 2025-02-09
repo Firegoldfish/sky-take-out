@@ -30,7 +30,7 @@ public interface SetmealMapper {
 
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
-    List<Setmeal> list(Long id);
+    // List<Setmeal> list(Long id);
 
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);

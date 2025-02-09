@@ -58,10 +58,10 @@ public class SetmealServiceImpl implements SetmealService{
         return new PageResult(setmealPage.getTotal(), setmealPage.getResult());
     }
 
-    @Override
-    public List<Setmeal> list(Long id) {
-        return setmealMapper.list(id);
-    }
+//    @Override
+//    public List<Setmeal> list(Long id) {
+//        return setmealMapper.list(id);
+//    }
 
     @Override
     public SetmealVO getByIdWithDish(Long id) {
