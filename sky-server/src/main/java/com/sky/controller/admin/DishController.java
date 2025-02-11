@@ -36,6 +36,7 @@ public class DishController {
         String key = "dish_" + dishDTO.getCategoryId();
         //清理缓存数据
         cleanCache(key);
+        
 
         return Result.success();
     }
