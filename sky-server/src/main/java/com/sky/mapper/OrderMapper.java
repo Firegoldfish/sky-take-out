@@ -17,4 +17,7 @@ public interface OrderMapper {
     Orders getById(Long id);
 
     void update(Orders orders);
+
+    @Select("select * from orders where number = #{orderNumber}")
+    Orders getByNumber(String outTradeNo);
 }
