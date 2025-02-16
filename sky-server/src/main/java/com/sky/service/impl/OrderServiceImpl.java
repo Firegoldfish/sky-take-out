@@ -54,6 +54,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserMapper userMapper;
 
+    public static Long orderid;
+
     @Transactional
     public OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO) {
         log.info("用户提交订单");
@@ -83,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
         orders.setPhone(addressBook.getPhone());
         orders.setConsignee(addressBook.getConsignee());
         orders.setUserId(userId);
+        orderid = orders.getId();
 
         orderMapper.insert(orders);
         //订单明细加n条
@@ -177,19 +180,23 @@ public class OrderServiceImpl implements OrderService {
     public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception{
         Long userId = BaseContext.getCurrentId();
         User user = userMapper.getByid(userId);
-        JSONObject jsonObject = weChatPayUtil.pay(
-                ordersPaymentDTO.getOrderNumber(),
-                new BigDecimal(0.01),
-                "测试支付",
-                user.getOpenid()
-        );
-        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
-            throw new OrderBusinessException("该订单已支付");
-        }
-
+//        JSONObject jsonObject = weChatPayUtil.pay(
+//                ordersPaymentDTO.getOrderNumber(),
+//                new BigDecimal(0.01),
+//                "测试支付",
+//                user.getOpenid()
+//        );
+//        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
+//            throw new OrderBusinessException("该订单已支付");
+//        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", "ORDERPAID");
         OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
         vo.setPackageStr(jsonObject.getString("package"));
-
+        Integer OrderPaidStatus = Orders.PAID;
+        Integer OrderStatus = Orders.TO_BE_CONFIRMED;
+        LocalDateTime check_out_time = LocalDateTime.now();
+        orderMapper.updateStatus(OrderStatus, OrderPaidStatus, check_out_time, orderid);
         return vo;
     }
 
