@@ -60,4 +60,11 @@ public class OrderController {
         log.info("用户预支付订单:{}", orderPaymentVO);
         return Result.success(orderPaymentVO);
     }
+
+    @PostMapping("/repetition/{id}")
+    @ApiOperation("再来一单")
+    public Result repetition(@PathVariable Long id) {
+        orderService.repetiton(id);
+        return Result.success();
+    }
 }
