@@ -66,4 +66,20 @@ public class OrderController {
     public Result cancel(@RequestBody OrdersCancelDTO ordersCancelDTO) throws Exception {
         orderService.cancel(ordersCancelDTO);
         return Result.success();
-    }}
+    }
+    @PutMapping("/delivery/{id}")
+    @ApiOperation("派送订单")
+    public Result delivery(@PathVariable("id") Long id) {
+        orderService.delivery(id);
+        return Result.success();
+    }
+
+    @PutMapping("/complete/{id}")
+    @ApiOperation("完成订单")
+    public Result complete(@PathVariable("id") Long id) {
+        orderService.complete(id);
+        return Result.success();
+    }
+}
+
+
