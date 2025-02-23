@@ -24,6 +24,7 @@ import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +63,10 @@ public class OrderServiceImpl implements OrderService {
 
     public static Long orderid;
 
-    @Value("${sky.shop.address}")
+    @Value("北京市海淀区上地十街10号")
     private String shopAddress;
 
-    @Value("${sky.baidu.ak}")
+    @Value("${BAIDU_AK}")
     private String ak;
 
     @Transactional
