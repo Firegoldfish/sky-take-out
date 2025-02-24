@@ -34,6 +34,14 @@ public class OrderTask {
 
     @Scheduled(cron = "0 0 1 * * ?")    // 每天凌晨1点执行一次
     public void processDeliveryOrder(){
-
+        log.info("处理一直配送的订单{}", LocalDateTime.now());
+        LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(-60);
+        List<Orders> orders = orderMapper.listByStatusAndOrderTimeLT(Orders.DELIVERY_IN_PROGRESS, localDateTime);
+        if (orders != null && orders.size() > 0) {
+            for (Orders order : orders) {
+                order.setStatus(Orders.COMPLETED);
+                orderMapper.update(order);
+            }
+        }
     }
 }
