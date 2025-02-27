@@ -69,6 +69,9 @@ public class OrderServiceImpl implements OrderService {
     @Value("${BAIDU_AK}")
     private String ak;
 
+    @Autowired
+    private WebSocketServer webSocketServer;
+
     @Transactional
     public OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO) {
         log.info("用户提交订单");
@@ -451,5 +454,22 @@ public class OrderServiceImpl implements OrderService {
             //配送距离超过5000米
             throw new OrderBusinessException("超出配送范围");
         }
+    }
+
+    public void reminder(Long id) {
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+
+        // 校验订单是否存在，并且状态为2
+        if (ordersDB == null || !ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+        Map map = new HashMap();
+        map.put("type",2);
+        map.put("orderId",id);
+        map.put("content","您有一笔订单需要处理"+ordersDB.getNumber());
+        // 发送提醒消息
+        
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 }
