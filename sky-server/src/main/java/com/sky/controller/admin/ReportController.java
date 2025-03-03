@@ -19,7 +19,6 @@ import java.time.LocalDate;
 @RequestMapping("/admin/report")
 @Slf4j
 public class ReportController {
-
     private ReportService reportService;
     /**
      * 营业额统计
@@ -33,4 +32,5 @@ public class ReportController {
         log.info("begin:{},end:{}", begin, end);
         return Result.success(reportService.getTurnoverStatistics(begin, end));
     }
+
 }
