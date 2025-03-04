@@ -47,4 +47,6 @@ public class ReportServiceImpl {
         }
         return TurnoverReportVO.builder().dateList(StringUtils.join(dateList, ",")).turnoverList(StringUtils.join(turnoverList, ",")).build();
     }
+
+
 }
