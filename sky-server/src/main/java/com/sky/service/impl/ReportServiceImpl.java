@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.UserMapper;
+import com.sky.service.ReportService;
 import com.sky.vo.OrderReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
@@ -18,7 +19,7 @@ import java.util.*;
 
 @Slf4j
 @Service
-public class ReportServiceImpl {
+public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private OrderMapper orderMapper;
