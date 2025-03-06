@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -95,15 +92,40 @@ public class ReportServiceImpl {
             dateList.add(begin.plusDays(1));
         }
 
-        List<Integer> orderList = new ArrayList<>();  // 用于存放每天的订单数
+        List<Integer> orderCountList = new ArrayList<>();  // 用于存放每天的订单数
+        List<Integer> validCountList = new ArrayList<>();  // 用于存放每天的有效订单数
 
         for (LocalDate date : dateList) {
             // 查询当天订单数
-
-            // 查询有效订单数
-
+            LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
+            LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
+            Integer orderCount = getOrderCount(beginTime, endTime, null);// 查询已完成订单数
+            Integer validCount = getOrderCount(beginTime, endTime, Orders.COMPLETED);// 查询有效订单数
+            orderCountList.add(orderCount);
+            validCountList.add(validCount);
         }
+        // 计算时间区间内的订单
+        Integer totalOrderCount = orderCountList.stream().reduce(Integer::sum).get();
+        // 计算时间区间内的有效订单
+        Integer totalValidCount = validCountList.stream().reduce(Integer::sum).get();
+        // 计算完成率
+        Double orderCompletionRate = totalOrderCount == 0 ? 0.0 : totalValidCount * 1.0 / totalOrderCount;
+        OrderReportVO.builder()
+                .dateList(StringUtils.join(dateList, ","))
+                .orderCountList(StringUtils.join(orderCountList, ","))
+                .validOrderCountList(StringUtils.join(validCountList, ","))
+                .totalOrderCount(totalOrderCount)
+                .validOrderCount(totalValidCount)
+                .orderCompletionRate(orderCompletionRate)
+                .build();
         return null;
     }
 
+    private Integer getOrderCount(LocalDateTime beginTime, LocalDateTime endTime, Integer status) {
+        Map map = new HashMap<>();
+        map.put("beginTime", beginTime);
+        map.put("endTime", endTime);
+        map.put("status", status);
+        return orderMapper.countByMap(beginTime, endTime);
+    }
 }
