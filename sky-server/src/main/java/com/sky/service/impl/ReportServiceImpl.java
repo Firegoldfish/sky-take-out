@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.UserMapper;
+import com.sky.vo.OrderReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import lombok.extern.slf4j.Slf4j;
@@ -85,6 +86,24 @@ public class ReportServiceImpl {
                 .totalUserList(StringUtils.join(totalUserList, ","))
                 .newUserList(StringUtils.join(userList, ","))
                 .build();
+    }
+
+    public OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end) {
+        List<LocalDate> dateList = new ArrayList<>();
+        dateList.add(begin);
+        while (!begin.equals(end)) {
+            dateList.add(begin.plusDays(1));
+        }
+
+        List<Integer> orderList = new ArrayList<>();  // 用于存放每天的订单数
+
+        for (LocalDate date : dateList) {
+            // 查询当天订单数
+
+            // 查询有效订单数
+
+        }
+        return null;
     }
 
 }
