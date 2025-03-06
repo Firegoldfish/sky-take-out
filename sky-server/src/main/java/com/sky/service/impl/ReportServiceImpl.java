@@ -86,4 +86,5 @@ public class ReportServiceImpl {
                 .newUserList(StringUtils.join(userList, ","))
                 .build();
     }
+
 }
