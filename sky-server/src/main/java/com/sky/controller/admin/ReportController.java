@@ -48,4 +48,5 @@ public class ReportController {
         log.info("begin:{},end:{}", begin, end);
         return Result.success(reportService.getOrderStatistics(begin, end));
     }
+
 }
